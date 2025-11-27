@@ -7,9 +7,9 @@
     <title>小宇的動物天氣</title>
     <!-- 請確認您的 icon 路徑 -->
     <link rel="icon" type="image/png" href="./icon-v2.png">
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap](https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap)"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap"
         rel="stylesheet">
 
     <style>
@@ -196,12 +196,8 @@
     </div>
 
     <script>
-        // ⚠️ 關鍵設定：您目前在「開發」還是「發布」？
-        // 如果在本機測試，請使用 localhost。
-        // 如果已部署到 Zeabur 並且後端也是新的，請使用 Zeabur 網址。
-        
-        // const API_BASE_URL = "http://localhost:3000"; 
-        const API_BASE_URL = "[https://weat-taipei.zeabur.app](https://weat-taipei.zeabur.app)";
+        // 設定為正式上線網址
+        const API_BASE_URL = "https://weat-taipei.zeabur.app";
 
         const CITIES = [
             { name: "台北市", value: "taipei" }, { name: "新北市", value: "new_taipei" },
