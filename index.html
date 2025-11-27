@@ -20,7 +20,6 @@
             --zp-purple: #6C5B7B;     /* 黃昏城市紫 */
             --zp-neon-blue: #00d2ff;  /* 科技藍 */
             --zp-cream: #FFF5EA;      /* 羊毛白 */
-            --zp-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 城市夜景漸層 */
             --zp-card-bg: rgba(255, 255, 255, 0.85);
             --zp-glass-border: rgba(255, 255, 255, 0.6);
         }
@@ -34,12 +33,8 @@
 
         body {
             font-family: 'Zen Maru Gothic', sans-serif;
-            /* 背景改為充滿活力的城市漸層 */
-            background: #FF9966;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to bottom, #FF5E62, #FF9966);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to bottom, #4CA1AF, #C4E0E5); /* 預設清爽藍 */
-            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); /* 夢幻紫粉色，更有電影氛圍 */
-            
+            /* 充滿活力的城市漸層背景 */
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
             min-height: 100vh;
             color: var(--zp-blue-dark);
             overflow-x: hidden;
@@ -60,20 +55,54 @@
             border-bottom: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 地點標示：改為類似警徽/城市路牌的風格 */
-        .location-pill {
+        /* === 縣市選擇器樣式 === */
+        .location-wrapper {
+            position: relative;
             background: var(--zp-blue-dark);
-            color: var(--zp-neon-blue);
-            padding: 8px 18px;
-            border-radius: 8px; /* 方形圓角，更現代 */
-            font-weight: 900;
-            font-size: 1.1rem;
-            transform: rotate(0deg); /* 修正傾斜，更正式 */
+            border-radius: 12px;
             border: 2px solid var(--zp-neon-blue);
             box-shadow: 0 4px 10px rgba(43, 58, 103, 0.4);
             display: flex;
             align-items: center;
-            gap: 5px;
+            padding: 0 10px;
+            min-width: 140px;
+        }
+
+        .location-icon {
+            font-size: 1.2rem;
+            margin-right: 5px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .location-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            border: none;
+            color: var(--zp-neon-blue);
+            font-size: 1.1rem;
+            font-weight: 900;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            padding: 8px 25px 8px 5px;
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* 自製下拉箭頭 */
+        .location-wrapper::after {
+            content: "▼";
+            font-size: 0.7rem;
+            color: var(--zp-neon-blue);
+            position: absolute;
+            right: 12px;
+            pointer-events: none;
+        }
+
+        .location-select option {
+            background: var(--zp-blue-dark);
+            color: white;
         }
 
         .update-pill {
@@ -104,7 +133,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* 時間膠囊：改為尼克橘 */
         .hero-period {
             position: absolute;
             top: -15px;
@@ -130,7 +158,7 @@
 
         .hero-icon {
             font-size: 6rem;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); /* 更強烈的立體感 */
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
             animation: float 4s ease-in-out infinite;
         }
 
@@ -185,7 +213,7 @@
         }
 
         .advice-text {
-            font-size: 1.2rem; /* 稍微縮小字體以容納較長文案 */
+            font-size: 1.2rem;
             font-weight: 900;
             color: var(--zp-blue-dark);
             margin: 5px 0;
@@ -206,7 +234,7 @@
         }
         
         .section-title::before {
-            content: "🚔"; /* 警車 Icon */
+            content: "🚔";
             font-size: 1.2rem;
         }
 
@@ -255,7 +283,7 @@
             color: var(--zp-orange);
         }
 
-        /* Loading 畫面 - 警局風格 */
+        /* Loading 畫面 */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -276,6 +304,11 @@
             animation: bounce 1.5s infinite alternate;
         }
 
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+
     </style>
 </head>
 
@@ -286,27 +319,59 @@
     </div>
 
     <div class="status-bar">
-        <div class="location-pill">👮‍♂️ 台北分局</div>
+        <div class="location-wrapper">
+            <span class="location-icon">👮‍♂️</span>
+            <select id="citySelect" class="location-select">
+                </select>
+        </div>
         <div id="updateTime" class="update-pill">更新中...</div>
     </div>
 
     <div class="container" id="mainContent" style="display: none;">
-
-        <div id="heroCard">
-            </div>
+        <div id="heroCard"></div>
 
         <h3 class="section-title">未來巡邏預報</h3>
-        <div class="scroll-container" id="futureForecasts">
-        </div>
-
+        <div class="scroll-container" id="futureForecasts"></div>
     </div>
 
     <script>
-        const API_URL = "https://weat-taipei.zeabur.app/api/weather/kaohsiung";
+        // 設定後端 API 網址 
+        // ⚠️ 請確保後端程式碼已部署到此網址，否則請改回 http://localhost:3000
+        const API_BASE_URL = "https://weat-taipei.zeabur.app";
+
+        // 全台 22 縣市清單 (Value 必須對應後端 CITY_MAP)
+        const CITIES = [
+            // 北部
+            { name: "台北市", value: "taipei" },
+            { name: "新北市", value: "new_taipei" },
+            { name: "基隆市", value: "keelung" },
+            { name: "桃園市", value: "taoyuan" },
+            { name: "新竹市", value: "hsinchu_city" },
+            { name: "新竹縣", value: "hsinchu_county" },
+            { name: "宜蘭縣", value: "yilan" },
+            // 中部
+            { name: "苗栗縣", value: "miaoli" },
+            { name: "台中市", value: "taichung" },
+            { name: "彰化縣", value: "changhua" },
+            { name: "南投縣", value: "nantou" },
+            { name: "雲林縣", value: "yunlin" },
+            // 南部
+            { name: "嘉義市", value: "chiayi_city" },
+            { name: "嘉義縣", value: "chiayi_county" },
+            { name: "台南市", value: "tainan" },
+            { name: "高雄市", value: "kaohsiung" },
+            { name: "屏東縣", value: "pingtung" },
+            // 東部
+            { name: "花蓮縣", value: "hualien" },
+            { name: "台東縣", value: "taitung" },
+            // 外島
+            { name: "澎湖縣", value: "penghu" },
+            { name: "金門縣", value: "kinmen" },
+            { name: "連江縣", value: "lienchiang" }
+        ];
 
         function getWeatherIcon(weather) {
             if (!weather) return "🌤️";
-            // 使用更鮮豔的天氣符號
             if (weather.includes("晴")) return "☀️";
             if (weather.includes("多雲")) return "🌥️";
             if (weather.includes("陰")) return "☁️";
@@ -317,25 +382,25 @@
 
         function getAdvice(rainProb, maxTemp) {
             let rainIcon = "🌂";
-            // 修改建議文案 1：降雨
-            let rainText = "傘？不用了啦"; 
+            let rainText = "傘？不用了啦";
             
-            if (parseInt(rainProb) > 30) {
+            // 轉成數字比較安全
+            const rainVal = parseInt(rainProb) || 0;
+            const tempVal = parseInt(maxTemp) || 25;
+
+            if (rainVal > 30) {
                 rainIcon = "☂️";
                 rainText = "記得帶傘！";
             }
 
             let clothIcon = "👕";
-            // 修改建議文案 2：穿搭預設
-            let clothText = "穿得舒服～"; 
+            let clothText = "穿得舒服～";
 
-            if (parseInt(maxTemp) >= 28) {
+            if (tempVal >= 28) {
                 clothIcon = "🎽";
-                // 修改建議文案 3：高溫
-                clothText = "穿短袖吧"; 
-            } else if (parseInt(maxTemp) <= 20) {
+                clothText = "穿短袖吧";
+            } else if (tempVal <= 20) {
                 clothIcon = "🧥";
-                // 修改建議文案 4：低溫
                 clothText = "會有點涼穿個外套吧";
             }
 
@@ -360,30 +425,32 @@
             const period = getTimePeriod(current.startTime);
             const avgTemp = Math.round((parseInt(current.maxTemp) + parseInt(current.minTemp)) / 2);
 
+            // 1. 渲染 Hero Card
             document.getElementById('heroCard').innerHTML = `
-                        <div class="hero-card">
-                            <div class="hero-period">${period}</div>
-                            <div class="hero-temp-container">
-                                <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
-                                <div class="hero-temp">${avgTemp}°</div>
-                            </div>
-                            <div class="hero-desc">${current.weather}</div>
-                            
-                            <div class="advice-grid">
-                                <div class="advice-item">
-                                    <div class="advice-icon">${advice.rainIcon}</div>
-                                    <div class="advice-text">${advice.rainText}</div>
-                                    <div style="font-size:0.8rem; color:#6C5B7B; font-weight:bold;">降雨率 ${current.rain}</div>
-                                </div>
-                                <div class="advice-item">
-                                    <div class="advice-icon">${advice.clothIcon}</div>
-                                    <div class="advice-text">${advice.clothText}</div>
-                                    <div style="font-size:0.8rem; color:#6C5B7B; font-weight:bold;">最高溫 ${current.maxTemp}°</div>
-                                </div>
-                            </div>
+                <div class="hero-card">
+                    <div class="hero-period">${period}</div>
+                    <div class="hero-temp-container">
+                        <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
+                        <div class="hero-temp">${avgTemp}°</div>
+                    </div>
+                    <div class="hero-desc">${current.weather}</div>
+                    
+                    <div class="advice-grid">
+                        <div class="advice-item">
+                            <div class="advice-icon">${advice.rainIcon}</div>
+                            <div class="advice-text">${advice.rainText}</div>
+                            <div style="font-size:0.8rem; color:#6C5B7B; font-weight:bold;">降雨率 ${current.rain}</div>
                         </div>
-                    `;
+                        <div class="advice-item">
+                            <div class="advice-icon">${advice.clothIcon}</div>
+                            <div class="advice-text">${advice.clothText}</div>
+                            <div style="font-size:0.8rem; color:#6C5B7B; font-weight:bold;">最高溫 ${current.maxTemp}°</div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
+            // 2. 渲染稍後預報
             const scrollContainer = document.getElementById('futureForecasts');
             scrollContainer.innerHTML = '';
 
@@ -397,28 +464,56 @@
                 }
 
                 scrollContainer.innerHTML += `
-                            <div class="mini-card">
-                                <div class="mini-time">${p}</div>
-                                <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
-                                <div class="mini-temp">${f.minTemp}° - ${f.maxTemp}°</div>
-                                <div style="font-size:0.8rem; color:#888; margin-top:5px;">💧${f.rain}</div>
-                            </div>
-                        `;
+                    <div class="mini-card">
+                        <div class="mini-time">${p}</div>
+                        <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
+                        <div class="mini-temp">${f.minTemp.replace('°C','')}° - ${f.maxTemp.replace('°C','')}°</div>
+                        <div style="font-size:0.8rem; color:#888; margin-top:5px;">💧${f.rain}</div>
+                    </div>
+                `;
             });
 
+            // 3. 更新日期
             const now = new Date();
             const month = now.getMonth() + 1;
             const date = now.getDate();
             const dayIndex = now.getDay();
             const days = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
-
             document.getElementById('updateTime').textContent = `${month}月${date}日 ${days[dayIndex]}`;
         }
 
-        async function fetchWeather() {
+        // 初始化下拉選單
+        function initCitySelector() {
+            const select = document.getElementById('citySelect');
+            
+            CITIES.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.value;
+                option.text = city.name + "分局"; 
+                select.appendChild(option);
+            });
+
+            // 預設選中台北
+            select.value = "taipei";
+
+            // 監聽選單切換
+            select.addEventListener('change', (e) => {
+                const selectedCity = e.target.value;
+                fetchWeather(selectedCity);
+            });
+        }
+
+        async function fetchWeather(city = "taipei") {
+            // 顯示 Loading
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+
+            // 組合 API 網址: /api/weather/cityCode
+            const targetUrl = `${API_BASE_URL}/api/weather/${city}`;
+
             try {
-                const delayPromise = new Promise(resolve => setTimeout(resolve, 1500));
-                const fetchPromise = fetch(API_URL).then(res => res.json());
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 1000));
+                const fetchPromise = fetch(targetUrl).then(res => res.json());
                 const [_, json] = await Promise.all([delayPromise, fetchPromise]);
 
                 if (json.success) {
@@ -426,15 +521,20 @@
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('mainContent').style.display = 'block';
                 } else {
-                    throw new Error("API Error");
+                    throw new Error("API Error: " + json.message);
                 }
             } catch (e) {
                 console.error(e);
-                alert("資料讀取失敗，可能是樹懶查太慢了！");
+                alert(`資料讀取失敗！請確認後端是否已更新。\n錯誤訊息: ${e.message}`);
+                // 失敗時把 Loading 關掉，避免畫面卡死
+                document.getElementById('loading').style.display = 'none';
             }
         }
 
-        document.addEventListener("DOMContentLoaded", fetchWeather);
+        document.addEventListener("DOMContentLoaded", () => {
+            initCitySelector();
+            fetchWeather("taipei");
+        });
     </script>
 </body>
 
