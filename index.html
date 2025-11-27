@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#2B3A67">
     
-    <title>動物方城市氣象站</title>
+    <title>🦊小宇的動物天氣🐰</title>
     
     <link rel="icon" type="image/png" href="./icon-v2.png">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -38,33 +38,25 @@
             padding-top: env(safe-area-inset-top);
         }
 
-        /* === 🎨 背景主題修正 (Color Fix) === */
-        
-        /* 早晨：兔窩鎮 (Bunnyburrow) - 清新嫩綠 */
+        /* === 🎨 背景主題修正 === */
         body.morning { 
             background-image: 
                 radial-gradient(circle, rgba(255,255,255,0.4) 2px, transparent 2.5px),
                 linear-gradient(120deg, #a1ffce 0%, #faffd1 100%);
             background-size: 30px 30px, 100% 100%;
         }
-        
-        /* 中午：撒哈拉廣場 (Sahara Square) - 炙熱金黃 */
         body.noon { 
             background-image: 
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.2) 0, rgba(255,255,255,0.2) 2px, transparent 0, transparent 40px),
                 linear-gradient(135deg, #fce38a 0%, #f38181 100%);
             background-size: auto, 100% 100%;
         }
-        
-        /* 下午：雨林區 (Rainforest District) - 濕潤藍綠 */
         body.afternoon { 
             background-image: 
                 linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%),
                 linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
             background-size: 100% 100%, 100% 100%;
         }
-        
-        /* ❄️ 晚上：極地區 (Tundratown) - 真正的冰藍色 */
         body.night { 
             background-image: 
                 radial-gradient(rgba(255,255,255,0.5) 1px, transparent 0),
@@ -72,19 +64,16 @@
             background-size: 50px 50px, 100% 100%;
         }
 
-        /* === 🏙️ 森林大都會天際線 (Forest Metropolis Skyline) === */
+        /* === 🏙️ 城市天際線 === */
         .city-skyline {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 45vh; /* 增加高度，更有氣勢 */
-            z-index: -1; pointer-events: none; opacity: 0.85; /* 提高清晰度 */
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 35vh;
+            z-index: -1; pointer-events: none; opacity: 0.85;
             background-repeat: repeat-x; background-position: bottom; background-size: auto 100%;
-            /* 新的：高密度、多層次的大都會剪影，前景帶有樹木暗示 */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 500'%3E%3Cdefs%3E%3Cstyle%3E.b1%7Bfill:%230b1421;%7D.b2%7Bfill:%23131c29;%7D.b3%7Bfill:%231a2639;%7D%3C/style%3E%3C/defs%3E%3C!-- 後景：最高摩天大樓層 --%3E%3Cpath class='b1' d='M0,500 L0,150 L50,150 L50,80 L120,80 L120,200 L180,200 L180,50 L250,50 L250,250 L300,250 L300,100 L380,100 L380,220 L450,220 L450,20 L520,20 L520,180 L600,180 L600,60 L680,60 L680,260 L750,260 L750,120 L820,120 L820,200 L900,200 L900,40 L980,40 L980,230 L1050,230 L1050,100 L1120,100 L1120,270 L1200,270 L1200,500 Z'/%3E%3C!-- 中景：密集建築群層 --%3E%3Cpath class='b2' d='M0,500 L0,300 L30,300 L30,250 L80,250 L80,320 L130,320 L130,200 L190,200 L190,350 L240,350 L240,220 L310,220 L310,340 L370,340 L370,180 L440,180 L440,360 L510,360 L510,240 L580,240 L580,330 L650,330 L650,210 L720,210 L720,350 L790,350 L790,260 L860,260 L860,340 L930,340 L930,190 L1010,190 L1010,320 L1080,320 L1080,230 L1150,230 L1150,360 L1200,360 L1200,500 Z'/%3E%3C!-- 前景：建築與樹木暗示層 --%3E%3Cpath class='b3' d='M0,500 L0,400 Q30,350 60,400 L100,400 L100,320 L160,320 L160,420 Q200,380 240,420 L280,420 L280,300 L350,300 L350,410 Q380,360 420,410 L460,410 L460,330 L530,330 L530,430 Q560,390 600,430 L640,430 L640,280 L710,280 L710,400 Q750,350 790,400 L830,400 L830,310 L900,310 L900,420 Q940,370 980,420 L1020,420 L1020,340 L1090,340 L1090,410 Q1130,360 1170,410 L1200,410 L1200,500 Z'/%3E%3C/svg%3E");
-            /* 底部漸層遮罩，讓剪影更自然融入 */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 284'%3E%3Cpath fill='%231a2639' d='M0,284 L0,150 L30,150 L30,100 L60,100 L60,180 L80,180 L80,60 L120,60 L120,200 L150,200 L150,80 L200,80 L200,220 L230,220 L230,40 L280,40 L280,190 L310,190 L310,10 L360,10 L360,160 L390,160 L390,70 L440,70 L440,210 L470,210 L470,30 L520,30 L520,180 L550,180 L550,90 L600,90 L600,230 L630,230 L630,50 L680,50 L680,170 L710,170 L710,20 L760,20 L760,190 L790,190 L790,110 L840,110 L840,240 L870,240 L870,0 L920,0 L920,160 L950,160 L950,80 L1000,80 L1000,284 Z'/%3E%3C/svg%3E");
             mask-image: linear-gradient(to top, black 50%, transparent 100%);
             -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
         }
 
-        /* 雨天特效 */
         .rain-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 0; display: none;
@@ -125,7 +114,6 @@
             border-right: 2px solid var(--zp-neon-blue); padding-right: 10px;
         }
         .zpd-label { font-size: 0.6rem; color: #ccc; letter-spacing: 2px; }
-        /* 調整時間字體大小與陰影 */
         .zpd-time { font-size: 1rem; color: white; text-shadow: 0 0 8px var(--zp-neon-blue); font-weight: 700; }
 
         .container { padding: 15px; max-width: 600px; margin: 0 auto; position: relative; z-index: 1;}
@@ -136,77 +124,90 @@
             border-radius: 24px; padding: 20px 15px; box-shadow: var(--glass-shadow);
             margin-bottom: 25px; position: relative; overflow: visible; 
             border: 1px solid var(--glass-border);
+            /* 修正：增加底部空間，避免卡片內容貼底 */
+            padding-bottom: 25px;
         }
-        .hero-card::after {
-            content: "ZPD CASE FILE"; position: absolute; bottom: 8px; right: 12px;
-            font-family: 'Share Tech Mono', monospace; color: rgba(43, 58, 103, 0.25);
-            font-size: 1.2rem; font-weight: bold; pointer-events: none;
+        
+        /* 修正：將 ZPD CASE FILE 移到卡片左上角，像檔案編號一樣 */
+        .hero-card::before {
+            content: "ZPD CASE FILE #9527"; 
+            position: absolute; top: -12px; left: 20px;
+            background: var(--zp-blue-dark); color: var(--zp-neon-blue);
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 0.8rem; font-weight: bold; 
+            padding: 4px 12px; border-radius: 12px;
+            border: 1px solid var(--zp-neon-blue);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            pointer-events: none; letter-spacing: 1px;
+            z-index: 15;
         }
+        /* 移除原本右下角的浮水印，避免重疊 */
+        .hero-card::after { content: none; }
 
         .partners-stage {
             display: flex; justify-content: space-between; align-items: flex-end;
             margin-bottom: 15px; position: relative; height: 140px;
+            /* 增加頂部 margin 讓出位置給新的標籤 */
+            margin-top: 10px;
         }
         .character {
-            width: 100px; height: 100px; border-radius: 50%;
+            width: 90px; height: 90px; /* 手機版稍微縮小一點頭像 */
+            border-radius: 50%;
             background-color: rgba(255,255,255,0.6); border: 3px solid white;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             position: relative; display: flex; justify-content: center; align-items: center;
-            font-size: 4.5rem; overflow: hidden; background-size: cover; background-position: center;
+            font-size: 4rem; overflow: hidden; background-size: cover; background-position: center;
             backdrop-filter: blur(5px);
         }
         .char-judy { border-color: var(--zp-judy); }
         .char-nick { border-color: var(--zp-nick); }
 
+        /* === 修正：對話氣泡不重疊 === */
         .dialogue-bubble {
-            position: absolute; top: -15px; width: auto; min-width: 120px; white-space: nowrap;
-            background: rgba(255, 255, 255, 0.95); padding: 6px 14px; border-radius: 20px;
-            font-size: 0.9rem; font-weight: bold; color: var(--zp-blue-dark);
+            position: absolute; top: -25px; /* 往上提一點 */
+            width: 110px; /* 限制寬度，避免太寬 */
+            background: rgba(255, 255, 255, 0.95); padding: 6px 10px; border-radius: 16px;
+            font-size: 0.8rem; font-weight: bold; color: var(--zp-blue-dark);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 1px solid white;
             opacity: 0; transform: translateY(10px);
             animation: popIn 0.5s forwards 0.5s; z-index: 10;
+            white-space: normal; /* 允許換行！ */
+            line-height: 1.3;
+            text-align: center; /* 文字置中 */
         }
-        .bubble-left { left: 0; border-bottom-left-radius: 0; }
-        .bubble-right { right: 0; border-bottom-right-radius: 0; text-align: right; }
+        .bubble-left { left: -10px; border-bottom-left-radius: 0; }
+        .bubble-right { right: -10px; border-bottom-right-radius: 0; }
         @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
 
-        /* === 修正：天氣資訊對齊 === */
+        /* 天氣資訊對齊 */
         .weather-center {
             position: absolute; left: 50%; bottom: 0;
             transform: translateX(-50%); z-index: 5;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; /* 讓圖示與溫度水平置中 */
-            justify-content: flex-end;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+            width: 120px; /* 給予固定寬度，確保居中 */
         }
         .main-icon { 
-            font-size: 5.5rem; 
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); 
-            line-height: 1; 
-            margin-bottom: -10px; /* 稍微拉近距離 */
+            font-size: 5rem; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); 
+            line-height: 1; margin-bottom: -5px; 
         }
         .main-temp { 
-            font-size: 3.5rem; 
-            font-weight: 900; 
-            color: var(--zp-blue-dark); 
-            line-height: 1; 
-            text-shadow: 0 0 20px rgba(255,255,255,0.8);
-            text-align: center; /* 確保文字本身也置中 */
+            font-size: 3.2rem; font-weight: 900; color: var(--zp-blue-dark); 
+            line-height: 1; text-shadow: 0 0 20px rgba(255,255,255,0.8);
+            text-align: center;
         }
 
-        /* === 建議資訊卡片 === */
         .advice-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px;
             padding-top: 15px; border-top: 2px dashed rgba(43, 58, 103, 0.2);
         }
         .advice-item {
-            background: rgba(255, 255, 255, 0.5); padding: 12px; border-radius: 16px;
+            background: rgba(255, 255, 255, 0.5); padding: 12px 8px; border-radius: 16px;
             text-align: center; display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.4);
         }
-        .advice-icon { font-size: 2rem; margin-bottom: 4px; }
-        .advice-text { font-size: 1.1rem; font-weight: 900; color: var(--zp-blue-dark); line-height: 1.2; }
-        .advice-sub { font-size: 0.8rem; color: #555; margin-top: 4px; font-weight: bold; }
+        .advice-icon { font-size: 1.8rem; margin-bottom: 4px; }
+        .advice-text { font-size: 1rem; font-weight: 900; color: var(--zp-blue-dark); line-height: 1.2; }
+        .advice-sub { font-size: 0.75rem; color: #555; margin-top: 4px; font-weight: bold; }
 
         .section-header {
             display: flex; align-items: center; margin-bottom: 12px;
@@ -417,27 +418,30 @@
             const h = new Date().getHours();
             const b = document.body;
             b.className = '';
+            
+            const pc = document.getElementById('rainContainer'); // 復用 rainContainer 當作粒子層
+            pc.innerHTML = ''; 
+
             if (weatherDesc && (weatherDesc.includes('雨') || weatherDesc.includes('雷'))) {
                 b.classList.add('afternoon');
-                document.getElementById('rainContainer').style.display = 'block';
-                createRain();
+                createRain(pc);
             } else {
-                document.getElementById('rainContainer').style.display = 'none';
                 if(h>=6 && h<11) b.classList.add('morning');
                 else if(h>=11 && h<16) b.classList.add('noon');
                 else if(h>=16 && h<19) b.classList.add('afternoon');
-                else b.classList.add('night');
+                else {
+                    b.classList.add('night');
+                }
             }
         }
 
-        function createRain() {
-            const c = document.getElementById('rainContainer'); c.innerHTML = '';
+        function createRain(container) {
             for(let i=0; i<50; i++) {
                 const d = document.createElement('div'); d.classList.add('rain-drop');
                 d.style.left = Math.random()*100+'vw';
                 d.style.animationDuration = (Math.random()*1+0.5)+'s';
                 d.style.animationDelay = Math.random()*2+'s';
-                c.appendChild(d);
+                container.appendChild(d);
             }
         }
 
